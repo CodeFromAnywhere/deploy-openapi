@@ -3,11 +3,11 @@
   "rewrites": [
     {
       "source": "/:path*",
-      "destination": "/api/index.ts"
+      "destination": "/api/:path*"
     },
     {
       "source": "/",
-      "destination": "/api/index.ts"
+      "destination": "/public/openapi.json"
     }
   ],
   "functions": {
