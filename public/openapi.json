@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://api.devin.com/v1"
+      "url": "https://deploy.actionschema.com"
     }
   ],
   "paths": {
