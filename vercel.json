@@ -4,11 +4,10 @@
     {
       "source": "/:path*",
       "destination": "/api/:path*"
-    },
-    {
-      "source": "/",
-      "destination": "/openapi.json"
     }
+  ],
+  "redirects": [
+    { "source": "/", "permanent": false, "destination": "/openapi.json" }
   ],
   "functions": {
     "api/*.ts": {

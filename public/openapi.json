@@ -156,7 +156,7 @@
     },
     "/edit": {
       "post": {
-        "summary": "Edit repository files",
+        "summary": "Edit repository files and submit a pr to the repo",
         "operationId": "editRepo",
         "requestBody": {
           "content": {
@@ -167,14 +167,29 @@
                   "repo": {
                     "type": "string"
                   },
-                  "path": {
-                    "type": "string"
-                  },
+
                   "changes": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "path": {
+                          "type": "string"
+                        },
+                        "changes": {
+                          "type": "array",
+                          "items": { "type": "object", "properties": {} }
+                        }
+                      }
+                    }
                   },
+
+                  "branchName": { "type": "string" },
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
                   "poll": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Wait for pr to be made"
                   }
                 },
                 "required": ["repo", "path", "changes"]
