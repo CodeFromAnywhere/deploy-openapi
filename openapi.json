@@ -1,0 +1,260 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Deployment API",
+    "description": "Serverless API for managing Github and Vercel integrations",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.devin.com/v1"
+    }
+  ],
+  "paths": {
+    "/get/{repo}": {
+      "get": {
+        "summary": "Get repository files",
+        "operationId": "getRepoFiles",
+        "parameters": [
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of files in the repository",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "githubOAuth2": [],
+            "vercelOAuth2": []
+          }
+        ]
+      }
+    },
+    "/status": {
+      "get": {
+        "summary": "Get status of all repositories",
+        "operationId": "getAllRepoStatus",
+        "responses": {
+          "200": {
+            "description": "Array of status objects for all repositories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusArray"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "githubOAuth2": [],
+            "vercelOAuth2": []
+          }
+        ]
+      }
+    },
+    "/status/{repo}": {
+      "get": {
+        "summary": "Get repository status",
+        "operationId": "getRepoStatus",
+        "parameters": [
+          {
+            "name": "repo",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Status of the repository",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "githubOAuth2": [],
+            "vercelOAuth2": []
+          }
+        ]
+      }
+    },
+    "/set": {
+      "post": {
+        "summary": "Set up a new repository",
+        "operationId": "setRepo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "type": "string"
+                  },
+                  "files": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "poll": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["repo", "files"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status of the repository setup",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "githubOAuth2": [],
+            "vercelOAuth2": []
+          }
+        ]
+      }
+    },
+    "/edit": {
+      "post": {
+        "summary": "Edit repository files",
+        "operationId": "editRepo",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "repo": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "changes": {
+                    "type": "string"
+                  },
+                  "poll": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["repo", "path", "changes"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Status of the repository edit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Status"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "githubOAuth2": [],
+            "vercelOAuth2": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Status": {
+        "type": "object",
+        "properties": {
+          "repo": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "lastUpdated": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": ["repo", "status", "lastUpdated"]
+      },
+      "StatusArray": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Status"
+        }
+      }
+    },
+    "securitySchemes": {
+      "githubOAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://github.com/login/oauth/authorize",
+            "tokenUrl": "https://github.com/login/oauth/access_token",
+            "scopes": {
+              "repo": "Full control of private repositories",
+              "user": "Access user information"
+            }
+          }
+        }
+      },
+      "vercelOAuth2": {
+        "type": "oauth2",
+        "flows": {
+          "authorizationCode": {
+            "authorizationUrl": "https://vercel.com/oauth/authorize",
+            "tokenUrl": "https://vercel.com/oauth/token",
+            "scopes": {
+              "read": "Read access to your Vercel projects",
+              "write": "Write access to your Vercel projects"
+            }
+          }
+        }
+      }
+    }
+  }
+}
