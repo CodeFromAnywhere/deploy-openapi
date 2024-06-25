@@ -52,6 +52,7 @@ export const GET = async (request: Request) => {
       if (res.ok) {
         return res.json();
       }
+      console.log({ status: res.status, message: res.statusText });
       return res.status;
     });
     /*as Promise<{
