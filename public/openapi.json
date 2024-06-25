@@ -1,12 +1,14 @@
 {
   "x-actionschema": "0.0.1",
+  "$schema": "https://raw.githubusercontent.com/CodeFromAnywhere/ActionSchema/main/schemas/openapi.schema.json",
+
   "security": [
     {
-      "githubOAuth2": []
+      "githubOAuth2": ["repos", "user"]
     }
   ],
 
-  "openapi": "3.1.0",
+  "openapi": "3.0.1",
   "info": {
     "title": "Deployment API",
     "description": "Serverless API for managing Github and Vercel integrations",
@@ -52,6 +54,7 @@
     },
     "/status": {
       "get": {
+        "security": [{ "githubOAuth2": ["repos", "user"] }],
         "summary": "Get status of all repositories",
         "operationId": "getAllRepoStatus",
         "responses": {
@@ -232,19 +235,6 @@
             "scopes": {
               "repo": "Full control of private repositories",
               "user": "Access user information"
-            }
-          }
-        }
-      },
-      "vercelOAuth2": {
-        "type": "oauth2",
-        "flows": {
-          "authorizationCode": {
-            "authorizationUrl": "https://vercel.com/oauth/authorize",
-            "tokenUrl": "https://vercel.com/oauth/token",
-            "scopes": {
-              "read": "Read access to your Vercel projects",
-              "write": "Write access to your Vercel projects"
             }
           }
         }
