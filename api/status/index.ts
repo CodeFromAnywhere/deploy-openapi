@@ -31,6 +31,6 @@ export const GET = async (request: Request) => {
 
     return new Response(JSON.stringify(login));
   } catch (e) {
-    return new Response("Pls login");
+    return new Response("Pls login", { status: 403 });
   }
 };
