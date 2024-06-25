@@ -4,8 +4,7 @@
 
   "security": [
     {
-      "githubOAuth2": [],
-      "vercelOAuth2": []
+      "githubOAuth2": []
     }
   ],
 
@@ -141,7 +140,7 @@
         }
       }
     },
-    "/edit": {
+    "/editRepo": {
       "post": {
         "summary": "Edit repository files and submit a pr to the repo",
         "operationId": "editRepo",
