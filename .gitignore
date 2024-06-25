@@ -6,4 +6,4 @@ package-lock.json
 # TODO: Implement this
 .vercel
 test
-.env.local
+.env

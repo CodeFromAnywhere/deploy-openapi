@@ -37,7 +37,7 @@ export const POST = async (request: Request) => {
   // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
   const {
     data: { login },
-  } = await octokit.rest.users();
+  } = await octokit.rest.users.getAuthenticated();
 
   return { login };
   // Get the SHA of the base branch: git/get-ref

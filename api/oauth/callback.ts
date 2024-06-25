@@ -20,6 +20,7 @@ export const json = (data: any) => {
 
 export const GET = async (request: Request) => {
   const url = new URL(request.url);
+  console.log({ url });
   const code = url.searchParams.get("code");
   const client_id = process.env.client_id;
   const client_secret = process.env.client_secret;
