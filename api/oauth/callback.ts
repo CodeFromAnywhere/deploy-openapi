@@ -34,25 +34,30 @@ export const GET = async (request: Request) => {
   }
 
   // comes from OpenAPI
-  const tokenUrl = "https://github.com/login/oauth/access_token";
-  const result = await fetch(tokenUrl, {
-    method: "POST",
-    body: JSON.stringify({
-      // the secret needs to be in the back...
-      client_id,
-      client_secret,
-      code,
-    }),
-  }).then(
-    (res) =>
-      res.json() as Promise<{
-        access_token?: string;
-        token_type?: "bearer";
-        scope?: string;
-        error?: string;
-      }>,
-  );
 
-  // NB: Not sure if this is the way.
-  return json(result);
+  try {
+    const tokenUrl = "https://github.com/login/oauth/access_token";
+    const result = await fetch(tokenUrl, {
+      method: "POST",
+      body: JSON.stringify({
+        // the secret needs to be in the back...
+        client_id,
+        client_secret,
+        code,
+      }),
+    }).then(
+      (res) =>
+        res.json() as Promise<{
+          access_token?: string;
+          token_type?: "bearer";
+          scope?: string;
+          error?: string;
+        }>,
+    );
+
+    // NB: Not sure if this is the way.
+    return json(result);
+  } catch (e) {
+    return json("Not found...." + e);
+  }
 };
