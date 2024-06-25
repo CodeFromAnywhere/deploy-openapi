@@ -50,16 +50,16 @@ export const GET = async (request: Request) => {
       },
     }).then((res) => {
       if (res.ok) {
-        return res.json() as Promise<{
+        return res.json();
+      }
+      return res.status;
+    });
+    /*as Promise<{
           access_token?: string;
           token_type?: "bearer";
           scope?: string;
           error?: string;
-        }>;
-      }
-      return;
-    });
-
+        }>;*/
     console.log({ result });
     // NB: Not sure if this is the way.
     return json(result);
