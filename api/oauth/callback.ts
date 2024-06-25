@@ -60,6 +60,7 @@ export const GET = async (request: Request) => {
       return;
     });
 
+    console.log({ result });
     // NB: Not sure if this is the way.
     return json(result);
   } catch (e) {
