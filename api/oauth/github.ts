@@ -20,7 +20,6 @@ export const json = (data: any) => {
 
 export const GET = async (request: Request) => {
   const url = new URL(request.url);
-
   const code = url.searchParams.get("code");
   const client_id = process.env.client_id;
   const client_secret = process.env.client_secret;
@@ -33,7 +32,9 @@ export const GET = async (request: Request) => {
     return new Response("Please give a code");
   }
 
-  const result = await fetch("https://github.com/login/oauth/access_token", {
+  // comes from OpenAPI
+  const tokenUrl = "https://github.com/login/oauth/access_token";
+  const result = await fetch(tokenUrl, {
     method: "POST",
     body: JSON.stringify({
       // the secret needs to be in the back...
@@ -50,5 +51,7 @@ export const GET = async (request: Request) => {
         error?: string;
       }>,
   );
+
+  // NB: Not sure if this is the way.
   return json(result);
 };
