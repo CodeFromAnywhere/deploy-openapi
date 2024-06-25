@@ -21,7 +21,9 @@ type EditBody = {
 */
 export const GET = async (request: Request) => {
   try {
-    const Authorization = request.headers.get("Authorization");
+    //const Authorization = ""
+
+    const Authorization = new URL(request.url).searchParams.get("auth");
     const octokit = new Octokit({ auth: Authorization || "test" });
     // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
     const res = await octokit.rest.users.getAuthenticated({});
