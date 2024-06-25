@@ -33,9 +33,8 @@ export const GET = async (request: Request) => {
     return new Response("Please give a code");
   }
 
-  // comes from OpenAPI
-
   try {
+    // comes from OpenAPI
     const tokenUrl = "https://github.com/login/oauth/access_token";
     const result = await fetch(tokenUrl, {
       method: "POST",
@@ -44,16 +43,19 @@ export const GET = async (request: Request) => {
         client_id,
         client_secret,
         code,
+        redirect_uri: "https://deploy.actionschema.com/oauth/callback",
       }),
-    }).then(
-      (res) =>
-        res.json() as Promise<{
+    }).then((res) => {
+      if (res.ok) {
+        return res.json() as Promise<{
           access_token?: string;
           token_type?: "bearer";
           scope?: string;
           error?: string;
-        }>,
-    );
+        }>;
+      }
+      return;
+    });
 
     // NB: Not sure if this is the way.
     return json(result);
