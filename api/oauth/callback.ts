@@ -18,6 +18,9 @@ export const json = (data: any) => {
   });
 };
 
+/**
+ * TO TRY: http://github.com/login/oauth/authorize?response_type=code&client_id=Ov23li2FVyYV9zqL6oJI&redirect_uri=https://deploy.actionschema.com/oauth/callback
+ */
 export const GET = async (request: Request) => {
   const url = new URL(request.url);
   console.log({ url });
@@ -42,14 +45,14 @@ export const GET = async (request: Request) => {
     const result = await fetch(tokenUrl, {
       method: "POST",
 
-      //not sure if body or params
-      body: JSON.stringify({
-        client_id,
-        // the secret needs to be in the back...
-        client_secret,
-        code,
-        redirect_uri,
-      }),
+      // //not sure if body or params
+      // body: JSON.stringify({
+      //   client_id,
+      //   // the secret needs to be in the back...
+      //   client_secret,
+      //   code,
+      //   redirect_uri,
+      // }),
 
       headers: {
         Accept: "application/json",
