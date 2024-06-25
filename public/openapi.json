@@ -1,14 +1,12 @@
 {
   "x-actionschema": "0.0.1",
-  "$schema": "https://raw.githubusercontent.com/CodeFromAnywhere/ActionSchema/main/schemas/openapi.schema.json",
-
   "security": [
     {
       "githubOAuth2": []
     }
   ],
 
-  "openapi": "3.0.1",
+  "openapi": "3.1.0",
   "info": {
     "title": "Deployment API",
     "description": "Serverless API for managing Github and Vercel integrations",
