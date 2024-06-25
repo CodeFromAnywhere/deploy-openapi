@@ -45,6 +45,9 @@ export const GET = async (request: Request) => {
         code,
         redirect_uri: "https://deploy.actionschema.com/oauth/callback",
       }),
+      headers: {
+        Accept: "application/json",
+      },
     }).then((res) => {
       if (res.ok) {
         return res.json() as Promise<{
