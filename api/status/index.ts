@@ -20,24 +20,17 @@ type EditBody = {
 
 */
 export const GET = async (request: Request) => {
-  const {
-    owner,
-    repo,
-    changes,
-    isPr,
-    pollForDeployment,
-    originalBranchName,
-    prBranchName,
-    prDescription,
-    prTitle,
-  }: EditBody = await request.json();
-  const Authorization = request.headers.get("Authorization");
-  const octokit = new Octokit({ auth: Authorization });
+  try {
+    const Authorization = request.headers.get("Authorization");
+    const octokit = new Octokit({ auth: Authorization || "test" });
+    // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
+    const res = await octokit.rest.users.getAuthenticated({});
 
-  // Compare: https://docs.github.com/en/rest/reference/users#get-the-authenticated-user
-  const {
-    data: { login },
-  } = await octokit.rest.users();
-  console.log({ login });
-  return { login };
+    const login = res?.data?.login;
+    console.log({ login, Authorization });
+
+    return new Response(JSON.stringify(login));
+  } catch (e) {
+    return new Response("Pls login");
+  }
 };
