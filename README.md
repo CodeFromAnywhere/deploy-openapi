@@ -1,3 +1,9 @@
+# POC GPT oAuth2
+
+Follow https://www.youtube.com/watch?v=6HFp0ISO4XI and test it
+
+POC: Deploy and test oauth via a GPT that uses `deploy.actionschema.com/openapi.json`
+
 # Accept text/html
 
 What if `vercel.json` could also serve good HTML?
@@ -55,12 +61,6 @@ NB: TIMEBOX THIS. Look at into middlewares for 1 hour, if it's good, let's creat
 
 # TODO
 
-Create a function `pastebin(string,path)` that puts a string at a URL so you can easily reduce context. Host it at https://io.actionschema.com (later also add other io functionality like uploading files/blobs easily to a good openapi, and e.g. file conversion)
-
-Add ratelimit `middleware.ts` to reader, web, and bin.
-
-Create a function `generateSdk(openapiUrl)` that responds with a string containing a typescript SDK for that api.
-
 Also add GitHubs openapi to Myelin.
 
 Write all files using Myelin one-by-one.
@@ -68,8 +68,6 @@ Write all files using Myelin one-by-one.
 Ensure `editRepo` and `setRepo` can also create files by using URLs that respond with content (to reduce context size)
 
 Put oauth in the designated endpoints, not in main...
-
-POC: Deploy and test oauth via a GPT that uses `deploy.actionschema.com/openapi.json`
 
 <!--
 
@@ -84,85 +82,3 @@ Having this will be huge. After this:
 -->
 
 # ⚠️⚠️⚠️ Work in progress ⚠️⚠️⚠️
-
-OpenAPI spec:
-
-- user-based oauth2 for github and vercel
-- `/{owner}/{repo}/{branch}` => files (proxy => github.actionschema.com)
-- `/status/{owner}/{repo}` => status
-- `/set(repo,files,poll:boolean)` => status
-- `/edit(repo,path,changes,poll:boolean)` => status
-
-This is one of the components of devin, except that this one is api-based, serverless, and pre-deployed.
-
-Other components are:
-
-- github reader / summariser
-- web reader / crawler / summariser
-- web search
-- openapi self-play
-- human
-- auth
-- toolbelt
-
-Having this in an agent is extremely powerful, I'd expect it to be able to increase my coding productivity a lot because of massive testing and research capabilities.
-
-Github useful endpoints:
-
-repos/list-commits
-repos/list-branches
-repos/get-commit
-repos/compare-commits
-repos/get-content
-
-maybe:
-
-repos/list-deployments (to check vercel deployment status, could also be done
-with vercel)
-repos/get-deployment-status
-git/create-commit
-issues/list-for-repo
-issues/list-comments
-issues/list-comments-for-repo
-reactions/list-for-issue-comment
-issues/get
-
-# useful vercel endpoints
-
-projects
-
-- getProjects - Retrieve a list of projects
-- createProject - Create a new project
-- createProjectEnv - Create one or more environment variables
-- updateProject - Update an existing project
-- getProjectDomains - Retrieve project domains by project by id or name
-- getProjectDomain - Get a project domain
-- updateProjectDomain - Update a project domain
-- removeProjectDomain - Remove a domain from a project
-- addProjectDomain - Add a domain to a project
-- verifyProjectDomain - Verify project domain
-- getProject - Find a project by id or name
-
-domains
-
-- buyDomain - Purchase a domain
-- checkDomainPrice - Check the price for a domain
-- checkDomainStatus - Check a Domain Availability
-- getDomainTransfer - Get domain transfer info.
-- getDomainConfig - Get a Domain's configuration
-- getDomain - Get Information for a Single Domain
-- getDomains - List all the domains
-- createOrTransferDomain - Register or transfer-in a new Domain
-- patchDomain - Update or move apex domain
-- deleteDomain - Remove a domain by name
-
-dns
-
-- getRecords - List existing DNS records
-- createRecord - Create a DNS record
-- updateRecord - Update an existing DNS record
-- removeRecord - Delete a DNS record
-
-# useful github endpoints
-
-repos/create-for-authenticated-user
